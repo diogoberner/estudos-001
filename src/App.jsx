@@ -1,35 +1,37 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useRef } from "react";
+import AudioPlayer from "./components/AudioPlayer";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const audioRef = useRef(null);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div style={{ display: "flex", flexDirection: "column", width: "50%" }}>
+      <AudioPlayer
+        ref={audioRef}
+        url={
+          "http://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3"
+        }
+      />
+      <button onClick={() => audioRef.current.play()}>Tocar</button>
+      <button onClick={() => audioRef.current.pause()}>Pausar</button>
+      <button onClick={() => audioRef.current.stop()}>Parar</button>
+      <button onClick={() => audioRef.current.setVolume(0.1)}>
+        Aumentar Volume
+      </button>
+      <button onClick={() => audioRef.current.setVolume(-0.1)}>
+        Diminuir Volume
+      </button>
+      <button onClick={() => audioRef.current.getCurrentTime()}>
+        Conseguir tempo atual da música
+      </button>
+      <button onClick={() => audioRef.current.setCurrentTime(1.2)}>
+        Pular música
+      </button>
+      <button onClick={() => audioRef.current.isPlaying()}>
+        Está tocando?
+      </button>
+    </div>
+  );
 }
 
-export default App
+export default App;
